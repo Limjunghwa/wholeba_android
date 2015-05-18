@@ -690,9 +690,9 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		}
 		
 		public static final String MISSION_ADD_URL = SERVER + "/missions/add";
-		public void addMission(Context context, int mission_theme, final OnResultListener<MissionResult> listener) {
+		public void addMission(Context context, int theme_no, final OnResultListener<MissionResult> listener) {
 			RequestParams params = new RequestParams();
-			params.put("mission_theme", mission_theme); 
+			params.put("theme_no",theme_no); 
 			
 			client.post(context, MISSION_ADD_URL, params, new TextHttpResponseHandler() {
 				
@@ -826,7 +826,6 @@ import com.loopj.android.http.TextHttpResponseHandler;
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,
 						String responseString) {
-					// TODO Auto-generated method stub
 					Gson gson = new Gson();
 					BananaItemResponse results = gson.fromJson(responseString, BananaItemResponse.class);
 					listener.onSuccess(results);
@@ -866,10 +865,11 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		
 		
 		public static final String USE_ITEM_URL = SERVER + "/items/%s/use/%s";
-		public void useItem(Context context, int item_no, int mlist_no, final OnResultListener<BananaItemResponse> listener) {
+		public void useItem(Context context, int item_no, int mlist_no,String mission_name, final OnResultListener<BananaItemResponse> listener) {
 			RequestParams params = new RequestParams();
 			params.put("item_no", item_no); 
 			params.put("mlist_no", mlist_no);
+			params.put("mission_name",mission_name);
 			String url = String.format(USE_ITEM_URL, item_no, mlist_no);
 			
 			client.post(context, url, params, new TextHttpResponseHandler() {
@@ -877,7 +877,6 @@ import com.loopj.android.http.TextHttpResponseHandler;
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,
 						String responseString) {
-					// TODO Auto-generated method stub
 					Gson gson = new Gson();
 					BananaItemResponse results = gson.fromJson(responseString, BananaItemResponse.class);
 					listener.onSuccess(results);

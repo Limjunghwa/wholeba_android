@@ -8,8 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.banana.banana.mission.MissionShowHint;
+
+
 import com.banana.banana.R;
+import com.banana.banana.R.id;
+import com.banana.banana.R.layout;
+import com.banana.banana.R.menu;
 
 public class MissionReceiveConfirmActivity extends ActionBarActivity {
 	Button btn_showHint;

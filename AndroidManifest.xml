@@ -189,11 +189,11 @@
         
         <activity
             android:name=".LogoutActivity"
-            android:label="@string/title_activity_logout" >
+            android:label="@string/title_activity_logout" android:exported="true">
         </activity>
         <activity
-            android:name=".MissionReceiveConfirmActivity"
-            android:label="@string/title_activity_mission_receive_confirm" >
+            android:name="com.banana.banana.mission.MissionReceiveConfirmActivity"
+            android:label="@string/title_activity_mission_receive_confirm" android:exported="true">
         </activity>
         <activity
             android:name=".WithDrawActivity"

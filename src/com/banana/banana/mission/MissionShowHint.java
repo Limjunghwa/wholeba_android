@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
 import com.banana.banana.R;
 public class MissionShowHint extends ActionBarActivity {
 	String hint;
 	TextView hintView;
+	Button btn_ok;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -18,7 +22,16 @@ public class MissionShowHint extends ActionBarActivity {
 		hint=intent.getStringExtra("mission_hint");
 		hintView=(TextView)findViewById(R.id.text_hint);
 		hintView.setText(hint);
-		
+		btn_ok=(Button)findViewById(R.id.btn_ok);
+		btn_ok.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			Intent intent=new Intent(MissionShowHint.this,MissionActivity.class);
+			startActivity(intent);
+				
+			}
+		});
 	}
 
 	@Override

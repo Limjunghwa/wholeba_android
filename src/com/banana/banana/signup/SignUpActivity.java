@@ -35,7 +35,7 @@ public class SignUpActivity extends ActionBarActivity {
 	TextView TextpwdOK;
 	int joincode = 2;   
 	int user_req = 0;  
- 	String reg_id = "regid"; //나중에 실제 gcmid로 바꿔야함!
+ 	String reg_id = PropertyManager.getInstance().getRegistrationId(); 
 	String user_id, user_pass, user_phone; 
 	
 	@Override

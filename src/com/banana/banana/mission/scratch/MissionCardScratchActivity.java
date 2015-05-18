@@ -9,9 +9,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.banana.banana.PropertyManager;
 import com.banana.banana.R;
 import com.banana.banana.love.NetworkManager;
 import com.banana.banana.love.NetworkManager.OnResultListener;
@@ -24,38 +27,45 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 	private WScratchView scratchView;
 	private TextView percentageView;
 	private float mPercentage;
-	Button btn_ok,btn_chance;
-	WScratchView wView;
-	HorizontalScrollView hView;
+	Button btn_ok,btn_chance,btn_ok2;
+	LinearLayout sView;
+	LinearLayout hView;
 	ImageView lottoView;
-	int item_no,mlist_no;
-	int theme;
+	int item_no,mlist_no,theme_no;
 	String themeName;
 	ImageView themeView;
-	TextView text_ThemeView;
+	TextView text_ThemeView,text_missionName;
 	TextView chip_countView;//보유 바나나칩 갯수
-	int chip_count;
+	
 	ImageView item1,item2,item3,item4;
 	int age;
+	String mission_name;
+	String mlist_regdate;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mission_card_scratch);
 		Intent intent=getIntent();
-		theme=intent.getIntExtra("theme", 0);
-		age=intent.getIntExtra("age", 0);
-		item_no=0;
-		themeName=intent.getStringExtra("themeName");
+		mlist_no=intent.getIntExtra("mlist_no", 0);
+		mission_name=intent.getStringExtra("mission_name");
+		mlist_regdate=intent.getStringExtra("mlist_regdate");
+		theme_no=intent.getIntExtra("theme_no", 0);
+		item_no=-1;
+		
+		
 		themeView=(ImageView)findViewById(R.id.imageView1);
-		chip_count=intent.getIntExtra("chipCount", 0);
 		chip_countView=(TextView)findViewById(R.id.chip_count);
-		chip_countView.setText(""+chip_count);
+		text_missionName=(TextView)findViewById(R.id.text_missionName);
+		text_missionName.setText(mission_name);
+		
+		chip_countView.setText(""+PropertyManager.getInstance().getChipCount());
 		text_ThemeView=(TextView)findViewById(R.id.text_themeName);
-		wView=(WScratchView)findViewById(R.id.scratch_view);
+		sView=(LinearLayout)findViewById(R.id.scratchView);
 		btn_ok=(Button)findViewById(R.id.btn_ok);
 		btn_chance=(Button)findViewById(R.id.btn_chance);
+		btn_ok2=(Button)findViewById(R.id.btn_ok2);
 		scratchView = (WScratchView) findViewById(R.id.scratch_view);
-		hView=(HorizontalScrollView)findViewById(R.id.horizontal_itemView);
+		hView=(LinearLayout)findViewById(R.id.itemView);
 		
 		scratchView.setScratchable(true);
 		scratchView.setRevealSize(50);
@@ -68,12 +78,10 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 		// add callback for update scratch percentage
 		scratchView.setOnScratchCallback(new WScratchView.OnScratchCallback() {
 
-			@Override
 			public void onScratch(float percentage) {
 				updatePercentage(percentage);
 			}
 
-			@Override
 			public void onDetach(boolean fingerDetach) {
 				if(mPercentage > 10){
 					scratchView.setScratchAll(true);
@@ -105,7 +113,7 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 			public void onClick(View v) {
 			
 				text_ThemeView.setVisibility(View.GONE);
-				wView.setVisibility(View.GONE);
+				sView.setVisibility(View.GONE);//scratch view remove
 				hView.setVisibility(View.VISIBLE);
 			
 				
@@ -116,40 +124,7 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				if(hView.getVisibility()==View.VISIBLE){//아이템을 사용시 (mlist_no는 푸시를 통해서 전달)
-				NetworkManager.getInstnace().confirmMission(MissionCardScratchActivity.this, mlist_no, new OnResultListener<MissionResult>() {
-
-					@Override
-					public void onSuccess(MissionResult result) {
-						
-						if(result.success==1){
-							NetworkManager.getInstnace().useItem(MissionCardScratchActivity.this, item_no, mlist_no, new OnResultListener<BananaItemResponse>() {
-
-								@Override
-								public void onSuccess(BananaItemResponse result) {
-								if(result.success==1){
-									Intent intent=new Intent(MissionCardScratchActivity.this,MissionActivity.class);
-									startActivity(intent);
-								}
-								}
-
-								@Override
-								public void onFail(int code) {
-									
-									
-								}
-							});
-						}
-					}
-
-					@Override
-					public void onFail(int code) {
-					
-						
-					}
-				});
 			
-				}else {
 					NetworkManager.getInstnace().confirmMission(MissionCardScratchActivity.this, mlist_no, new OnResultListener<MissionResult>() {
 
 						@Override
@@ -169,19 +144,62 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 						}
 					});
 				}
+			
+		});
+		btn_ok2.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(item_no!=-1){
+				NetworkManager.getInstnace().confirmMission(MissionCardScratchActivity.this, mlist_no, new OnResultListener<MissionResult>() {
+
+					@Override
+					public void onSuccess(MissionResult result) {
+						
+						if(result.success==1){
+							if(item_no!=9){
+								mission_name="";
+							}
+							NetworkManager.getInstnace().useItem(MissionCardScratchActivity.this, item_no, mlist_no,mission_name, new OnResultListener<BananaItemResponse>() {
+
+								@Override
+								public void onSuccess(BananaItemResponse result) {
+								if(result.success==1){
+									Toast.makeText(MissionCardScratchActivity.this, "아이템 사용 완료", Toast.LENGTH_SHORT).show();
+									Intent intent=new Intent(MissionCardScratchActivity.this,MissionActivity.class);
+									startActivity(intent);
+								}
+							}
+
+								@Override
+								public void onFail(int code) {
+									
+									
+								}
+							});
+						}
+					}
+
+					@Override
+					public void onFail(int code) {
+					
+						
+					}
+				});
+			}
 			}
 		});
 		//아이템 클릭시 처리 시작  ---------------------------------------
 		
-		item1=(ImageView)findViewById(R.id.imageView3);
-		item2=(ImageView)findViewById(R.id.imageView4);
-		item3=(ImageView)findViewById(R.id.imageView5);
-		item4=(ImageView)findViewById(R.id.imageView6);
+		item1=(ImageView)findViewById(R.id.item1);
+		item2=(ImageView)findViewById(R.id.item2);
+		item3=(ImageView)findViewById(R.id.item3);
+		item4=(ImageView)findViewById(R.id.item4);
 		item1.setOnClickListener(new View.OnClickListener() {//1번 아이템 선택 
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(MissionCardScratchActivity.this, "image1click", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MissionCardScratchActivity.this, "item1click", Toast.LENGTH_SHORT).show();
 				item_no=1;
 			}
 		});
@@ -189,6 +207,7 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
+				Toast.makeText(MissionCardScratchActivity.this, "item2click", Toast.LENGTH_SHORT).show();
 			item_no=2;
 				
 			}
@@ -197,6 +216,7 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
+				Toast.makeText(MissionCardScratchActivity.this, "item3click", Toast.LENGTH_SHORT).show();
 				item_no=3;
 				
 			}
@@ -205,31 +225,31 @@ public class MissionCardScratchActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
+				Toast.makeText(MissionCardScratchActivity.this, "item4click", Toast.LENGTH_SHORT).show();
 				item_no=4;
 				
 			}
 		});
-		//아이템 클릭시 처리 끝 ---------------------------------------
-		Toast.makeText(MissionCardScratchActivity.this, ""+age, Toast.LENGTH_SHORT).show();
+		
 	}
 	public void setTheme()
 	{
-		if(theme==1)//악마
+		if(theme_no==1)//악마
 		{
 			themeView.setImageResource(R.drawable.mission_devil_icon);
-			text_ThemeView.setText(themeName);
-		}else if(theme==2){//처음
+			text_ThemeView.setText("악마미션");
+		}else if(theme_no==2){//처음
 			themeView.setImageResource(R.drawable.mission_fist_icon);
-			text_ThemeView.setText(themeName);
-		}else if(theme==3){//섹시
+			text_ThemeView.setText("처음미션");
+		}else if(theme_no==3){//섹시
 			themeView.setImageResource(R.drawable.mission_sexy_icon);
-			text_ThemeView.setText(themeName);
-		}else if(theme==4){//애교
+			text_ThemeView.setText("섹시미션");
+		}else if(theme_no==4){//애교
 			themeView.setImageResource(R.drawable.mission_cute_icon);
-			text_ThemeView.setText(themeName);
-		}else if(theme==5){//천사
+			text_ThemeView.setText("애교미션");
+		}else if(theme_no==5){//천사
 			themeView.setImageResource(R.drawable.mission_angel_icon);
-			text_ThemeView.setText(themeName);
+			text_ThemeView.setText("천사미션");
 		}
 		
 	}
