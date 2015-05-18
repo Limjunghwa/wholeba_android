@@ -1,10 +1,10 @@
 package com.banana.banana.mission;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -53,7 +53,12 @@ public class MissionAdapter extends BaseAdapter{
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			MissionItemView v=new MissionItemView(mcontext);
-			v.setItemData(Missionitems.get(position));
+			try {
+				v.setItemData(Missionitems.get(position));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return v;
 		}
 

@@ -19,7 +19,7 @@ public class AddMissionActivity extends ActionBarActivity {
 	Button btnOK;
 	ToggleButton btnTheme1, btnTheme2, btnTheme3, btnTheme4, btnTheme5, btnTheme6;
 	
-	int theme_no;//미션 테마 
+	int theme_no=3;//미션 테마 
 	boolean selected = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,8 @@ public class AddMissionActivity extends ActionBarActivity {
 		btnTheme4 = (ToggleButton)findViewById(R.id.ToggleTheme4); 
 		btnTheme5 = (ToggleButton)findViewById(R.id.ToggleTheme5); 
 		btnTheme6 = (ToggleButton)findViewById(R.id.ToggleTheme6); 
-		
+		//로직 다시 짜기 
+		/*
 		if(btnTheme1.isChecked()) {
 			theme_no = 3;
 			btnTheme2.setEnabled(false);
@@ -58,7 +59,7 @@ public class AddMissionActivity extends ActionBarActivity {
 			btnTheme6.setEnabled(false);
 			selected = true;
 		} else if (btnTheme4.isChecked()) {
-			theme_no =2; 
+			theme_no =5; 
 			btnTheme2.setEnabled(false);
 			btnTheme3.setEnabled(false);
 			btnTheme1.setEnabled(false);
@@ -66,7 +67,7 @@ public class AddMissionActivity extends ActionBarActivity {
 			btnTheme6.setEnabled(false);
 			selected = true;
 		} else if (btnTheme5.isChecked()) {
-			theme_no =5;
+			theme_no =4;
 			btnTheme2.setEnabled(false);
 			btnTheme3.setEnabled(false);
 			btnTheme4.setEnabled(false);
@@ -74,14 +75,14 @@ public class AddMissionActivity extends ActionBarActivity {
 			btnTheme6.setEnabled(false);
 			selected = true;
 		} else if (btnTheme6.isChecked()) {
-			theme_no = 4; 
+			theme_no = 2; 
 			btnTheme2.setEnabled(false);
 			btnTheme3.setEnabled(false);
 			btnTheme4.setEnabled(false);
 			btnTheme5.setEnabled(false);
 			btnTheme1.setEnabled(false);
 			selected = true;
-		}
+		}*/
 		
 		 
 		btnOK=(Button)findViewById(R.id.btn_ok);
@@ -90,7 +91,9 @@ public class AddMissionActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) { 
 				//if(selected  == true) {
-					addMission();
+				
+				addMission();
+				Toast.makeText(AddMissionActivity.this, "send", Toast.LENGTH_LONG).show();	
 				//}
 			}
 		});
@@ -103,9 +106,9 @@ public class AddMissionActivity extends ActionBarActivity {
 			@Override
 			public void onSuccess(MissionResult result) {
 				if(result.success==1){
-				// TODO Auto-generated method stub
+				
 				Intent intent=new Intent(AddMissionActivity.this,MissionSendOkActivity.class);
-				//Toast.makeText(AddMissionActivity.this, mission_theme, Toast.LENGTH_SHORT).show();
+			
 				startActivity(intent); 
 				}
 			}

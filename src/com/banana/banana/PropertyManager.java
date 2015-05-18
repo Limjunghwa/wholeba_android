@@ -36,7 +36,10 @@ public class PropertyManager {
 	public void setChipCount(int chipCount){
 		mEditor.putInt(CHIP_COUNT,chipCount);
 	}
-
+	public int getChipCount()
+	{
+		return mPrefs.getInt(CHIP_COUNT, 0);
+	}
 	public String getRegistrationId() {
 		return mPrefs.getString(FIELD_REG_ID, "");
 	} 
@@ -66,5 +69,4 @@ public class PropertyManager {
 	public String getUserGender() {
 		return mPrefs.getString(KEY_GENDER, "");
 	}
-
 }

@@ -6,21 +6,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.banana.banana.mission.MissionReceiveConfirmActivity" >
+    tools:context="com.banana.banana.MissionShowHint" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="미스터 바나나님께서 미션을 확인했습니다." />
+        android:text="힌트" />
 
-    <Button
-        android:id="@+id/btn_showHint"
+    <TextView
+        android:id="@+id/text_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="105dp"
-        android:text="미션 힌트 보기" />
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="86dp"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="TextView" />
 
 </RelativeLayout>
