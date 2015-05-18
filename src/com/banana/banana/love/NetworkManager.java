@@ -87,7 +87,8 @@ import com.loopj.android.http.TextHttpResponseHandler;
 			public void onFail(int code); 
 		}
 		
-		// 더미 SERVER public static final String SERVER = "http://zzanghansol.mooo.com";
+		//public static final String SERVER = "http://zzanghansol.mooo.com";
+		//public static final String HTTPS_SERVER = "http://zzanghansol.mooo.com";
 		public static final String SERVER = "http://yeolwoo.mooo.com";
 		public static final String HTTPS_SERVER = "https://yeolwoo.mooo.com";
 		
@@ -667,13 +668,9 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		public static final String MISSION_LIST_URL = SERVER +  "/missions/%s/%s/%s";
 		public void getMissionList(Context context, int year, int month, int orderby, final OnResultListener<MissionResult> listener) {
 			
-			RequestParams params = new RequestParams();
-			params.put("year", year);
-			params.put("month", month);
-			params.put("orderby", orderby);
 			
 			String url = String.format(MISSION_LIST_URL, year, month, orderby);
-			client.get(context, url, params, new TextHttpResponseHandler() {
+			client.get(context, url, new TextHttpResponseHandler() {
 				
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,
@@ -795,6 +792,30 @@ import com.loopj.android.http.TextHttpResponseHandler;
 					listener.onFail(statusCode); 
 				}
 			}); 
+		}
+		public static final String ASKPOPUP_MISSION_URL = SERVER + "/missions/askpopup";
+		public void askpopup(Context context,int mlist_no,final OnResultListener<MissionResult> listener){
+			RequestParams params = new RequestParams();
+			params.put("mlist_no", mlist_no); 
+			
+			client.post(context, ASKPOPUP_MISSION_URL, params, new TextHttpResponseHandler() {
+				
+				@Override
+				public void onSuccess(int statusCode, Header[] headers,
+						String responseString) {
+					// TODO Auto-generated method stub
+					Gson gson = new Gson();
+					MissionResult results = gson.fromJson(responseString, MissionResult.class);
+					listener.onSuccess(results);
+				}
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						String responseString, Throwable throwable) {
+					// TODO Auto-generated method stub
+					listener.onFail(statusCode); 
+				}
+			});
 		}
 		
 		//--------아이템---------

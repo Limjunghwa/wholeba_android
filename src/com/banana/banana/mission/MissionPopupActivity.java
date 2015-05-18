@@ -13,52 +13,12 @@ import com.banana.banana.main.BananaMainActivity;
 
 public class MissionPopupActivity extends ActionBarActivity {
 
-	ImageView missionImageView1, missionImageView2, missionImageView3,closeView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_mission_popup);
-		missionImageView1=(ImageView)findViewById(R.id.img_mission1);
-		missionImageView2=(ImageView)findViewById(R.id.img_mission2);
-		missionImageView3=(ImageView)findViewById(R.id.img_mission3);
-		missionImageView1.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent=new Intent(MissionPopupActivity.this,MissionDetailActivity.class);
-				startActivity(intent);
-				
-			}
-		});
-missionImageView2.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent=new Intent(MissionPopupActivity.this,MissionDetailActivity.class);
-				startActivity(intent);
-				
-			}
-		});
-missionImageView3.setOnClickListener(new View.OnClickListener() {
-	
-	@Override
-	public void onClick(View v) {
-		Intent intent=new Intent(MissionPopupActivity.this,MissionDetailActivity.class);
-		startActivity(intent);
+		setContentView(R.layout.activity_love_popup);
 		
-	}
-});
-		closeView=(ImageView)findViewById(R.id.img_close);
-		closeView.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent=new Intent(MissionPopupActivity.this,BananaMainActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent); 
-				
-			}
-		});
 	}
 
 	@Override

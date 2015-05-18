@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.banana.banana.R;
+import com.banana.banana.love.NetworkManager;
+import com.banana.banana.love.NetworkManager.OnResultListener;
 
 public class MissionSendPushActivity extends ActionBarActivity {
 	private int mlist_no;
@@ -25,6 +27,23 @@ public class MissionSendPushActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				
+				NetworkManager.getInstnace().askpopup(MissionSendPushActivity.this, mlist_no, new OnResultListener<MissionResult>() {
+					
+					@Override
+					public void onSuccess(MissionResult result) {
+						if(result.success==1){
+							Intent intent=new Intent(MissionSendPushActivity.this,MissionPopupActivity.class);
+							startActivity(intent);
+						}
+						
+					}
+					
+					@Override
+					public void onFail(int code) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 				
 			}
 		});

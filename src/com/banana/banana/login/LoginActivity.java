@@ -41,11 +41,13 @@ public class LoginActivity extends ActionBarActivity {
 	int user_req;
 	int user_no;
 	String gender, user_phone, userid, password;
-	String reg_id = "regididididiididi1231"; 
+	String reg_id ; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		reg_id=PropertyManager.getInstance().getRegistrationId();
+		Log.i("reg_id", reg_id);
 		idView = (EditText)findViewById(R.id.edit_userid);
 		pwdView = (EditText)findViewById(R.id.edit_password);
 		btn_login_ok = (Button)findViewById(R.id.btn_login_ok);

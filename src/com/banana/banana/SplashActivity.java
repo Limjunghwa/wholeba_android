@@ -1,24 +1,28 @@
 package com.banana.banana;
  
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.banana.banana.intro.IntroActivity;
-import com.banana.banana.login.LoginActivity;
 import com.banana.banana.login.LoginResult;
 import com.banana.banana.love.NetworkManager;
 import com.banana.banana.love.NetworkManager.OnResultListener;
@@ -29,6 +33,8 @@ import com.banana.banana.signup.FirstMeetingActivity;
 import com.banana.banana.signup.JoinResult;
 import com.banana.banana.signup.SexInfoActivity;
 import com.banana.banana.tutorial.TutorialActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class SplashActivity extends ActionBarActivity {
@@ -51,19 +57,19 @@ public class SplashActivity extends ActionBarActivity {
 	     * Substitute you own sender ID here. This is the project number you got
 	     * from the API Console, as described in "Getting Started."
 	     */
-	    String SENDER_ID = "381522331641";
+	    String SENDER_ID = "492958073196";
 
 	    /**
 	     * Tag used on log messages.
 	     */
 	    static final String TAG = "GCM Demo";
-	    String reg_id = "regid";  //실제 gcm id로 바꿔야함
+	    String reg_id ;  //실제 gcm id로 바꿔야함
 	    //TextView mDisplay;
 	    GoogleCloudMessaging gcm;
 	    AtomicInteger msgId = new AtomicInteger();
 	    Context context;
 //----------------------------------------------------------------------------
-	Handler mHandler = new Handler(Looper.getMainLooper());
+
  
 	
 	
@@ -71,22 +77,7 @@ public class SplashActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_spalsh);
-		// mDisplay = (TextView) findViewById(R.id.display);
-
-	        /*context = getApplicationContext();
-
-	        // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
-	        if (checkPlayServices()) {  
-							gcm = GoogleCloudMessaging.getInstance(this);  
-	            regid = PropertyManager.getInstance().getRegistrationId();  
-	            if (regid.equals("")) {
-	                registerInBackground();
-	            }Log.i("regid",regid);
-	        } else {
-	            Log.i(TAG, "No valid Google Play Services APK found.");
-	            Log.i("regid",regid);
-	        }
-*/ 
+		checkAndRegister();
 		user_id = PropertyManager.getInstance().getUserId();   //shared의 user_id확인
 		user_pass = PropertyManager.getInstance().getPassword();
 		if(!user_id.equals("") && !user_pass.equals("")) { 
@@ -96,7 +87,88 @@ public class SplashActivity extends ActionBarActivity {
 		}
 	}
 	 
+Handler mHandler = new Handler(Looper.getMainLooper());
+ 
+	
+	
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == PLAY_SERVICES_RESOLUTION_REQUEST) {
+			if (resultCode == Activity.RESULT_OK) {
+				checkAndRegister();
+			} else {
+				finish();
+			}
+		}
+	}
 
+	private void checkAndRegister() {
+		if (checkPlayServices()) {
+			String regid = PropertyManager.getInstance().getRegistrationId();
+			if (regid.equals("")) {
+				registerInBackground();
+			} else {
+				doRealStart();
+			}
+		}
+	}
+
+	private void doRealStart() {
+		
+		reg_id=PropertyManager.getInstance().getRegistrationId();
+		Log.i("regid", reg_id);
+		
+		
+	}
+	
+	
+
+	private boolean checkPlayServices() {
+		int resultCode = GooglePlayServicesUtil
+				.isGooglePlayServicesAvailable(this);
+		if (resultCode != ConnectionResult.SUCCESS) {
+			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(
+						resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST);
+				dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						finish();
+					}
+				});
+				dialog.show();
+			} else {
+				finish();
+			}
+			return false;
+		}
+		return true;
+	}
+	
+
+	private void registerInBackground() {
+		new AsyncTask<Void, Integer, String>() {
+			@Override
+			protected String doInBackground(Void... params) {
+				try {
+					GoogleCloudMessaging gcm = GoogleCloudMessaging
+							.getInstance(SplashActivity.this);
+					String regid = gcm.register(SENDER_ID);
+					PropertyManager.getInstance().setRegistrationId(regid);
+					return regid;
+				} catch (IOException ex) {
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(String msg) {
+				doRealStart();
+			}
+		}.execute();
+	}
+	
 	private void Login() {
 		// TODO Auto-generated method stub
 		TelephonyManager telManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
@@ -259,21 +331,7 @@ public class SplashActivity extends ActionBarActivity {
 		getMenuInflater().inflate(R.menu.spalsh, menu);
 		return true;
 	}
-/*
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }*/  
+ 
     private void storeRegistrationId(Context context, String regId) {
         final SharedPreferences prefs = PropertyManager.getInstance().mPrefs;
         //int appVersion = getAppVersion(context);
@@ -296,77 +354,7 @@ public class SplashActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	/* private void registerInBackground() {
-	        new AsyncTask<Void, Void, String>() {
-	            @Override
-	            protected String doInBackground(Void... params) {
-	                String msg = "";
-	                try {
-	                    if (gcm == null) {
-	                        gcm = GoogleCloudMessaging.getInstance(context);
-	                    
-	                  
-	                    }
-	                    regid = gcm.register(SENDER_ID);
-	                    msg = "Device registered, registration ID=" + regid;
-	                    Log.i("regid",regid);
-	                    // You should send the registration ID to your server over HTTP, so it
-	                    // can use GCM/HTTP or CCS to send messages to your app.
-	                    sendRegistrationIdToBackend();
 
-	                    // For this demo: we don't need to send it because the device will send
-	                    // upstream messages to a server that echo back the message using the
-	                    // 'from' address in the message.
-
-	                    // Persist the regID - no need to register again.
-	                    storeRegistrationId(context, regid);
-	                } catch (IOException ex) {
-	                    msg = "Error :" + ex.getMessage();
-	                    // If there is an error, don't just keep trying to register.
-	                    // Require the user to click a button again, or perform
-	                    // exponential back-off.
-	                }
-	                return msg;
-	            }
-
-	            @Override
-	            protected void onPostExecute(String msg) {
-	             //   mDisplay.append(msg + "\n");
-	            }
-	        }.execute(null, null, null);
-	    }
-
-	    // Send an upstream message.
-	    
-
-	    @Override
-	    protected void onDestroy() {
-	        super.onDestroy();
-	    }*/
-
-	    /**
-	     * @return Application's version code from the {@code PackageManager}.
-	     */
-	  /*  private static int getAppVersion(Context context) {
-	        try {
-	            PackageInfo packageInfo = context.getPackageManager()
-	                    .getPackageInfo(context.getPackageName(), 0);
-	            return packageInfo.versionCode;
-	        } catch (NameNotFoundException e) {
-	            // should never happen
-	            throw new RuntimeException("Could not get package name: " + e);
-	        }
-	    }*/
-
-	    /**
-	     * @return Application's {@code SharedPreferences}.
-	     */
-	 
-	    /**
-	     * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send
-	     * messages to your app. Not needed for this demo since the device sends upstream messages
-	     * to a server that echoes back the message using the 'from' address in the message.
-	     */
 	    private void sendRegistrationIdToBackend() {
 	      // Your implementation here.
 	    }

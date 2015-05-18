@@ -54,13 +54,12 @@ public class FancyCoverFlowSampleAdapter extends FancyCoverFlowAdapter {
     public void add(int res){
     	images[cardCount]=res;
     	cardCount++;
+    	notifyDataSetChanged();
+    	
     }
     public void clear()
     {
-    	for(int i=0;i<cardCount;i++)
-    	{
-    		images[i]=0;
-    	}
+    	
     	cardCount=0;
     }
     @Override
@@ -77,9 +76,9 @@ public class FancyCoverFlowSampleAdapter extends FancyCoverFlowAdapter {
             imageView.setLayoutParams(new FancyCoverFlow.LayoutParams(400, 800));
             
         }
-        	if(cardCount!=0){
+        	
         imageView.setImageResource(this.getItem(i));
-        	}
+        	
         return imageView;
     }
 }

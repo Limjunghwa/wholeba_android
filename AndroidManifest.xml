@@ -165,7 +165,7 @@
         </activity>
         <activity
             android:name=".mission.scratch.MissionCardScratchActivity"
-            android:label="@string/title_activity_mission_card_scratch" >
+            android:label="@string/title_activity_mission_card_scratch" android:exported="true">
         </activity>
         <activity
             android:name=".mission.MissionSendOkActivity"
