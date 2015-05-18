@@ -1,0 +1,205 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_character_background"
+    android:orientation="vertical"
+    tools:context="com.example.banana.MainActivity" >
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="346dp"
+        android:orientation="vertical" > 
+        <LinearLayout
+            android:id="@+id/LayoutDday" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="34dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text_dday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="D day"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/main_item_menu_color"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/text_dday_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="2dp"
+                android:gravity="center_horizontal"
+                android:text="days"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/main_item_menu_color"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="46dp"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/img_male"
+                        android:layout_width="106dp"
+                        android:layout_height="206dp"
+                        android:src="@drawable/main_banana_character_man" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="26dp" >
+
+                        <ImageView
+                            android:id="@+id/image_male_item"
+                            android:layout_width="21dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="6dp"
+                            android:src="@drawable/main_banana_chip_icon" />
+
+                        <TextView
+                            android:id="@+id/text_male_level"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="2"
+                            android:textColor="#ffb806"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/img_female"
+                        android:layout_width="106dp"
+                        android:layout_height="206dp"
+                        android:src="@drawable/main_banana_character_woman" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="26dp" >
+
+                        <ImageView
+                            android:id="@+id/image_female_item"
+                            android:layout_width="21dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="6dp"
+                            android:src="@drawable/main_banana_chip_icon" />
+
+                        <TextView
+                            android:id="@+id/text_female_level"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="2"
+                            android:textColor="#ffb806"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScroll_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/img_mission3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/img_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ListView
+        android:id="@+id/listView_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="0px" >
+    </ListView>
+
+</LinearLayout>
