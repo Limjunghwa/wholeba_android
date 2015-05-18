@@ -23,7 +23,7 @@ public class DdayDialog extends DialogFragment {
 
 	DdayAdapter mDAdpater;
 	EditText ddayNameView, ddayYearView, ddayDayView, ddayMonthView;
-	ToggleButton repeatbtn;
+	//ToggleButton repeatbtn;
 	int dday_repeat, code, id;
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -71,11 +71,11 @@ public class DdayDialog extends DialogFragment {
 				String dMonth = ddayMonthView.getText().toString();
 				String dDay = ddayDayView.getText().toString();
 				String dDate = dYear+"+"+dMonth+"+"+dDay;
-				if(repeatbtn.isChecked()) {
+				/*if(repeatbtn.isChecked()) {
 					dday_repeat = 1;
 				} else {
 					dday_repeat = 0;
-				}
+				}*/
 				if(code != 1) { 
 					editDdayData(id, dName, dDate, dday_repeat);
 				} else {  

@@ -55,4 +55,5 @@ public class DdayAdapter extends BaseAdapter {
 		view.setData(ddaylist.get(position));	
 		return view;
 	}
+ 
 }

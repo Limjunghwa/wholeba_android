@@ -2,6 +2,7 @@ package com.banana.banana.love;
 
 import android.content.Context;
 import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.banana.banana.R;
-
-
 
 public class LoveItemView extends FrameLayout {
 	LoveItem mData;
@@ -98,19 +97,19 @@ public class LoveItemView extends FrameLayout {
 
 	public void setData(LoveItem data) {
 		mData = data; 
-		LoveDateView.setText(data.date);
+		LoveDateView.setText(data.loves_date);
 		//LoveProgressBar.setProgress((int)data.pregnancy_rate);
-		if(data.pregnancy_rate>=70.0f){
+		if(data.loves_pregnancy>=70.0f){
 			LoveProgressBar.setImageResource(R.drawable.love_clip2);
 			cd=(ClipDrawable) LoveProgressBar.getDrawable();
-			cd.setLevel((int)data.pregnancy_rate*100);
+			cd.setLevel((int)data.loves_pregnancy*100);
 			
 		}else{
 			LoveProgressBar.setImageResource(R.drawable.love_clip);
 			cd=(ClipDrawable) LoveProgressBar.getDrawable();
-			cd.setLevel((int)data.pregnancy_rate*100);
+			cd.setLevel((int)data.loves_pregnancy*100);
 		}
 		
-		PossibilityView.setText(""+data.pregnancy_rate); 
+		PossibilityView.setText(""+data.loves_pregnancy); 
 	}
 }
