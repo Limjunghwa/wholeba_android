@@ -114,6 +114,7 @@
         <activity
             android:name=".setting.MyinfoActivity"
             android:label="@string/title_activity_myinfo" >
+            
         </activity>
         <activity
             android:name=".setting.MyPartenerInfoActivity"
