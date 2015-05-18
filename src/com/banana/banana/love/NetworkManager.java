@@ -88,36 +88,11 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		
 		// 더미 SERVER public static final String SERVER = "http://zzanghansol.mooo.com";
 		public static final String SERVER = "http://yeolwoo.mooo.com";
-	
-		/*-----------로그인---------*/	
-		public static final String AUTO_LOGIN_URL = SERVER + "/users/autologin"; 
-		public void autoLogin(Context context, int user_no, String user_phone, final OnResultListener<AutoLoginResponse> listener) {
-			RequestParams params = new RequestParams();
-			params.put("user_no", user_no);
-			params.put("user_phone", user_phone);
-			
-			client.post(context, LOGIN_URL, params, new TextHttpResponseHandler() {
-				
-				@Override
-				public void onSuccess(int statusCode, Header[] headers,
-						String responseString) {
-					// TODO Auto-generated method stub
-					Gson gson = new Gson();
-					AutoLoginResponse results = gson.fromJson(responseString, AutoLoginResponse.class);
-					listener.onSuccess(results); 
-				}
-				
-				@Override
-				public void onFailure(int statusCode, Header[] headers,
-						String responseString, Throwable throwable) {
-					// TODO Auto-generated method stub
-					listener.onFail(statusCode); 
-				}
-			});
-		}
+		public static final String HTTPS_SERVER = "https://yeolwoo.mooo.com";
 		
 		
-		public static final String LOGIN_URL = SERVER + "/users/login";
+		/*-----------로그인---------*/			
+		public static final String LOGIN_URL = HTTPS_SERVER + "/users/login";
 		public void login(Context context, String user_id, String user_pass, String user_phone, String user_regid, final OnResultListener<LoginResult> listener) {
 			RequestParams params = new RequestParams();
 			params.put("user_id", user_id);
@@ -146,7 +121,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		
 		
 		/*----------중복로그인 시도---------*/
-		public static final String ACCEPT_LOGIN_URL = SERVER + "/users/acceptlogin";
+		public static final String ACCEPT_LOGIN_URL = HTTPS_SERVER + "/users/acceptlogin";
 		public void acceptLogin(Context context, String user_id, String user_pass, String user_phone, String user_regid, final OnResultListener<LoginResult> listener) {
 			RequestParams params = new RequestParams();
 			params.put("user_id", user_id);
@@ -173,7 +148,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		}
 		
 		/*-----------회원가입---------*/	
-		public static final String JOIN_URL = SERVER + "/users/join";
+		public static final String JOIN_URL = HTTPS_SERVER + "/users/join";
 		public void addjoin(Context context, String user_id, String user_pw, String user_phone, String user_regid, String user_regdate, final OnResultListener<JoinResult> listener) {
 			RequestParams param = new RequestParams();
 			param.put("user_id", user_id);
