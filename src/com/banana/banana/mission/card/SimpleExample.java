@@ -121,13 +121,9 @@ public class SimpleExample extends Activity {
 						
 						theme_no=md.theme_no;
 						mlist_no=md.mlist_no;
-						//mlist_name=md.mlist_name;
-						//fAdapter.add(R.drawable.card1);
+						
 						if(theme_no==1){//악마
 							fAdapter.add(R.drawable.card1);
-						
-							
-							
 						}else if(theme_no==2){//처음
 							fAdapter.add(R.drawable.card2);
 							
