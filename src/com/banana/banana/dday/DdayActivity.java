@@ -1,5 +1,8 @@
 package com.banana.banana.dday;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -18,7 +21,6 @@ import android.widget.TextView;
 import com.banana.banana.R;
 import com.banana.banana.love.NetworkManager;
 import com.banana.banana.love.NetworkManager.OnResultListener;
-import com.banana.banana.main.BananaMainActivity;
 import com.banana.banana.setting.SettingActivity;
 public class DdayActivity extends ActionBarActivity {
 
@@ -26,7 +28,7 @@ public class DdayActivity extends ActionBarActivity {
 	DdayAdapter mDAdapter;
 	//View DdayheaderView;
 	Button btnAdd;
-	TextView titleView;
+	TextView titleView, textToday;
 	ImageView settingImg;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,15 @@ public class DdayActivity extends ActionBarActivity {
 				startActivity(intent);
 			}
 		}); 
+	      
+	      
+	    textToday = (TextView)findViewById(R.id.today);
+	    long now = System.currentTimeMillis();
+	    Date date = new Date(now);
+	    SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+	    String today = CurDateFormat.format(date);
+	    textToday.setText(today);
+	    
 		btnAdd = (Button)findViewById(R.id.btn_add_dday);
 		btnAdd.setOnClickListener(new OnClickListener() {
 			

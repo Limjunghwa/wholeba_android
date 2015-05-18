@@ -13,7 +13,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.banana.banana.R;
 import com.banana.banana.love.NetworkManager.OnResultListener;
@@ -22,10 +24,11 @@ public class LoveDialog extends DialogFragment {
 	
 	EditText LoveDayView, LoveYearView, LoveMonthView;
 	Button btnOk, btnDelete; 
-	int orderby, year, month, iscondom, code, relation_no;
-	String loveday;
+	int orderby, year, month, iscondom, relation_no;
+	String code;
+	String loveday, loves_date;
+	RadioGroup isCondomView; 
 	RadioButton condomView, notCondomView;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,17 +42,37 @@ public class LoveDialog extends DialogFragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.love_dialog, container, false);
 		
+
+		Bundle b = getArguments();
+		code = b.getString("code");
+		
 		btnOk = (Button)view.findViewById(R.id.btn_ok);
 		btnDelete = (Button)view.findViewById(R.id.btn_delete); 
 		LoveDayView = (EditText)view.findViewById(R.id.edit_love_day);
 		LoveMonthView = (EditText)view.findViewById(R.id.edit_love_month);
 		LoveYearView = (EditText)view.findViewById(R.id.edit_love_year);
+
 		condomView = (RadioButton)view.findViewById(R.id.radio_condom);
 		notCondomView = (RadioButton)view.findViewById(R.id.radio_nocondom);
+		isCondomView = (RadioGroup)view.findViewById(R.id.RadioGroup1);
 		
-		Bundle b = getArguments();
-		code = b.getInt("code");
-			if(code == 1) { 
+		isCondomView.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch (checkedId) {
+				case R.id.radio_condom:
+					iscondom = 1;
+					break;
+
+				case R.id.radio_nocondom:
+					iscondom = 0;
+					break;
+				} 
+			}
+		});  
+		
+			if(code.equals("1")) { 
 				LoveDayView.setText("");
 			} else { 
 				orderby = b.getInt("orderby");
@@ -63,14 +86,9 @@ public class LoveDialog extends DialogFragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub 
-				if(condomView.isChecked()) {
-					iscondom = 1;
-				} else {
-					iscondom = 0;
-				}
-				if(code != 1) {  
+				if(!code.equals("1")) {  
 					 modifyLove(relation_no, iscondom, loveday);
-				} else {  
+				} else if(code.equals("1")){
 					addLove(iscondom);
 				}
 			}
@@ -82,7 +100,7 @@ public class LoveDialog extends DialogFragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				if(code != 1) { 
+				if(!code.equals("1")) { 
 					deleteLove(relation_no);
 				} else {  
 					Toast.makeText(getActivity(), "삭제할 성관계가 없습니다.", Toast.LENGTH_SHORT).show();
@@ -121,7 +139,7 @@ public class LoveDialog extends DialogFragment {
 				// TODO Auto-generated method stub
 				Bundle b = getArguments(); 
 				int position = b.getInt("position");
-				loveday = result.items.item.get(position-1).date;  
+				loveday = result.items.item.get(position-1).loves_date;  
 				StringTokenizer tokens = new StringTokenizer(loveday);
 				String loveYear = tokens.nextToken("-");
 				String loveMonth = tokens.nextToken("-");
@@ -129,8 +147,8 @@ public class LoveDialog extends DialogFragment {
 				LoveYearView.setText(loveYear);
 				LoveMonthView.setText(loveMonth);
 				LoveDayView.setText(loveDate);
-				relation_no = result.items.item.get(position-1).relation_no;
-				iscondom = result.items.item.get(position-1).is_condom;
+				relation_no = result.items.item.get(position-1).loves_no;
+				iscondom = result.items.item.get(position-1).loves_condom;
 				if(iscondom == 1) {
 					condomView.setChecked(true);
 				} else {
@@ -149,7 +167,13 @@ public class LoveDialog extends DialogFragment {
  
 	protected void addLove(int iscondom) {
 		// TODO Auto-generated method stub
-		NetworkManager.getInstnace().addLove(getActivity(), iscondom, new OnResultListener<LoveSearchResult>() {
+		 
+		String year = LoveYearView.getText().toString();
+		String month = LoveMonthView.getText().toString();
+		String day = LoveDayView.getText().toString();
+		loves_date = year+"-"+month+"-"+day;
+		
+		NetworkManager.getInstnace().addLove(getActivity(), iscondom, loves_date, new OnResultListener<LoveSearchResult>() {
 
 			@Override
 			public void onSuccess(LoveSearchResult result) {

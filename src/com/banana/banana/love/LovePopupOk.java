@@ -1,5 +1,9 @@
 package com.banana.banana.love;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -102,7 +106,12 @@ public class LovePopupOk extends ActionBarActivity implements SensorEventListene
 
 	private void addLove() {
 		// TODO Auto-generated method stub
-		NetworkManager.getInstnace().addLove(LovePopupOk.this, is_condom, new OnResultListener<LoveSearchResult>() {
+		
+		Date today = new Date(); 
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today); 
+		String loves_date = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+		NetworkManager.getInstnace().addLove(LovePopupOk.this, is_condom, loves_date, new OnResultListener<LoveSearchResult>() {
 			
 			@Override
 			public void onSuccess(LoveSearchResult result) {

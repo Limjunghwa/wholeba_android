@@ -2,6 +2,7 @@ package com.banana.banana.dday;
 
 import com.google.gson.annotations.SerializedName;
 
+
 public class Ddayitem { 
 	@SerializedName("dday_no")
 	public int dday_no;

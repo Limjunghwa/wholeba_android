@@ -1,4 +1,6 @@
 package com.banana.banana.love;
+ 
+import java.util.Calendar;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
@@ -29,8 +31,6 @@ import com.banana.banana.love.NetworkManager.OnResultListener;
 import com.banana.banana.setting.SettingActivity;
 
 import de.passsy.holocircularprogressbar.HoloCircularProgressBar;
- 
-
 
 public class LoveActivity extends ActionBarActivity {
 	private HoloCircularProgressBar mHoloCircularProgressBar;
@@ -39,22 +39,18 @@ public class LoveActivity extends ActionBarActivity {
 	LoveAdapter mLAdapter; 
 	View headerView; 
 	Button btn_LoveAdd; 
-	TextView noCondomView, isCondomView, LoveDayView, YearView, monthView, titleView;
-	//ToggleButton repeatLovebtn;
-	int orderby=0;
-	int year, month;
+	TextView noCondomView, isCondomView, LoveDayView, YearView, monthView, titleView; 
+	int orderby=0, count = 0, year, month, couple_condom; 
 	float isCondom, notCondom;
 	Spinner lovesort;
 	ArrayAdapter<CharSequence> sortAdapter;
-	private CustomGallery mCustomGallery;
-	private CustomGallery mCustomGallery2;
-	View layoutSort, sortLayout;
+	private CustomGallery mCustomGallery, mCustomGallery2; 
+	View layoutSort, sortLayout, layoutTodayPercent;
 	CustomGalleryImageAdapter cAdapter;
 	CustomGalleryImageAdapter2 cAdapter2;
-	LoveDialog dialog; 
-	View layoutTodayPercent; 
-	int count = 0;
+	LoveDialog dialog;   
 	ImageView settingImg;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,10 +73,8 @@ public class LoveActivity extends ActionBarActivity {
 				startActivity(intent);
 			}
 		});
-		
-		
-		loveList = (ListView)findViewById(R.id.listView1); 
-		//repeatLovebtn = (ToggleButton)findViewById(R.id.toggleButton_love_sort);
+		 
+		loveList = (ListView)findViewById(R.id.listView1);  
 		btn_LoveAdd = (Button)findViewById(R.id.btn_add_love);
 		mLAdapter = new LoveAdapter(this); 
 		headerView = (View)getLayoutInflater().inflate(
@@ -101,7 +95,18 @@ public class LoveActivity extends ActionBarActivity {
 		sortAdapter = ArrayAdapter.createFromResource(this, R.array.list_love_sort, android.R.layout.simple_spinner_item);
 		cAdapter = new CustomGalleryImageAdapter(this);
 		cAdapter2 = new CustomGalleryImageAdapter2(this);
-  
+		 
+		Intent i = getIntent();
+		couple_condom = i.getIntExtra("couple_condom", -1); 
+		
+		 Calendar oCalendar = Calendar.getInstance();
+		 year = oCalendar.get(Calendar.YEAR);
+		 month = oCalendar.get(Calendar.MONTH)+1;
+		
+		 YearView.setText(""+year);
+		 monthView.setText(""+month);
+		
+		initData(); 
 		
 		layoutTodayPercent.setOnClickListener(new OnClickListener() {
 			
@@ -127,9 +132,9 @@ public class LoveActivity extends ActionBarActivity {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				if(position == 1) {
-				orderby = position;
-				Toast.makeText(LoveActivity.this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-				initData();
+					orderby = position;
+					Toast.makeText(LoveActivity.this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+					initData();
 				} else if(position == 0) {
 					orderby = position;
 					Toast.makeText(LoveActivity.this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
@@ -149,7 +154,7 @@ public class LoveActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Bundle b = new Bundle();
-				b.putInt("code", 1);
+				b.putString("code", "1");
 				dialog = new LoveDialog();
 				dialog.setArguments(b);
 				dialog.show(getSupportFragmentManager(), "dialog");
@@ -165,7 +170,7 @@ public class LoveActivity extends ActionBarActivity {
 				b.putInt("year", year);
 				b.putInt("month", month);
 				b.putInt("orderby", orderby);
-				b.putInt("code", 0);
+				b.putString("code", "0");
 				b.putInt("position", position);  
 				dialog = new LoveDialog();
 				dialog.setArguments(b);
@@ -188,12 +193,7 @@ public class LoveActivity extends ActionBarActivity {
 			 
 			 YearView.setText(""+cAdapter.mImageID[position]);
 			 year = Integer.parseInt(cAdapter.mImageID[position]);
-			 initData();
-			 //if(month==2){
-				// Log.i("count:", ""+mCustomGallery2.getChildCount());
-			//  mCustomGallery2.getChildAt(11).setVisibility(View.GONE);
-			  
-			 // }
+			 initData(); 
 		}
 
 		@Override
@@ -203,22 +203,7 @@ public class LoveActivity extends ActionBarActivity {
 		}
 	});
 	     
-	  mCustomGallery2 = (CustomGallery) findViewById(R.id.gallery2); 
-	  //if(month==2){
-		// Toast.makeText(MyApplication.getContext(), mCustomGallery2.getChildCount(),Toast.LENGTH_LONG).show();
-	  //mCustomGallery2.getChildAt(11).setVisibility(View.GONE);
-	  
-	 // }
-	  //else{
-		/* LayoutInflater mInflater = (LayoutInflater) MyApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		   View mview =mInflater.inflate(R.layout.gallery2, null);
-	  
-
-
-		  ImageView image=(ImageView)mview.findViewById(R.id.image);
-		  image.setBackgroundResource(R.drawable.pic10);
-		  mCustomGallery2.addView(image);*/
-	 // }
+	  mCustomGallery2 = (CustomGallery) findViewById(R.id.gallery2);  
 	  mCustomGallery2.setAdapter(cAdapter2);
 	  mCustomGallery2.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -247,12 +232,7 @@ public class LoveActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				setVisibileDetailView(!isVisibleDetailView());
 			}
-		});
-
-		initData(); 
-		
-		
-		
+		}); 
 	}
 	
 	
@@ -261,15 +241,18 @@ public class LoveActivity extends ActionBarActivity {
 
 			@Override
 			public void onSuccess(LoveList result) {
-				// TODO Auto-generated method stub
-			//	Toast.makeText(LoveActivity.this, result.message, Toast.LENGTH_SHORT).show();
+				// TODO Auto-generated method stub 
 				mLAdapter.clear();
 				mLAdapter.addAll(result.items.item);
 				isCondom = result.items.today_condom;
 				notCondom = result.items.today_notcondom; 
 				isCondomView.setText(""+isCondom);
 				noCondomView.setText(""+notCondom);     
-				mHoloCircularProgressBar.setProgress((float)result.items.today_notcondom/100); 
+				if(couple_condom == 0) {
+					mHoloCircularProgressBar.setProgress((float)result.items.today_notcondom/100); 
+				} else {
+					mHoloCircularProgressBar.setProgress((float)result.items.today_condom/100); 
+				}
 			}
 
 			@Override
@@ -288,29 +271,7 @@ public class LoveActivity extends ActionBarActivity {
 	
 	public void setVisibileDetailView(boolean isVisible) {
 		sortLayout.setVisibility(isVisible?View.VISIBLE:View.GONE);
-	}
-	/*
-	private void initData() {
-		// TODO Auto-generated method stub 
-		
-			NetworkManager.getInstnace().getLoveList(this, new OnResultListener<ArrayList<LoveItemData>>() {
-				
-				@Override
-				public void onSuccess(ArrayList<LoveItemData> result) {
-					// TODO Auto-generated method stub
-					for(LoveItemData d : result) {
-						mLAdapter.add(d);
-					}
-				}
-				
-				@Override
-				public void onFail(int code) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-		
-			}*/
+	} 
 
 	private void animate(final HoloCircularProgressBar progressBar, final AnimatorListener listener) {
 		final float progress = (float) (Math.random() * 2);

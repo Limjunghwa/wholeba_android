@@ -430,7 +430,6 @@ import com.loopj.android.http.TextHttpResponseHandler;
 			});
 		}
 		
-		
 		 
 		/*-----------DDAY---------*/
 		public static final String DDAY_SEARCH_URL = SERVER + "/ddays";	
@@ -481,15 +480,15 @@ import com.loopj.android.http.TextHttpResponseHandler;
 			});
 		}
 		 
-		public static final String DDAY_EDIT_URL = SERVER + "/ddays/dday_no/modify";
+		public static final String DDAY_EDIT_URL = SERVER + "/ddays/%s/modify";
 		public void editDday(Context context, int ddayno, String ddayname, String ddaydate, int ddayrepeat, final OnResultListener<DdayResponse> listener) {
-			RequestParams params = new RequestParams();
-			params.put("dday_no", ""+ddayno);
+			RequestParams params = new RequestParams(); 
 			params.put("dday_name", ddayname);
 			params.put("dday_date", ddaydate);
-			params.put("dday_repeat", ""+ddayrepeat);
 			
-			client.post(context, DDAY_EDIT_URL, params, new TextHttpResponseHandler() {
+			String url = String.format(DDAY_EDIT_URL, ddayno);
+			
+			client.post(context, url, params, new TextHttpResponseHandler() {
 				
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,
@@ -508,12 +507,11 @@ import com.loopj.android.http.TextHttpResponseHandler;
 			}); 
 		}
 		
-		public static final String DDAY_DELETE_URL = SERVER + "/ddays/dday_no/delete";
+		public static final String DDAY_DELETE_URL = SERVER + "/ddays/%s/delete";
 		public void deleteDday(Context context, int ddayno, final OnResultListener<DdayResponse> listener) {
-			RequestParams params = new RequestParams();
-			params.put("dday_no", ""+ddayno);
+			String url = String.format(DDAY_DELETE_URL, ddayno);
 			
-			client.post(context, DDAY_DELETE_URL, params, new TextHttpResponseHandler() {
+			client.post(context, url, null, new TextHttpResponseHandler() {
 				
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,
@@ -565,7 +563,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		params.put("year", ""+year);
 		params.put("month", ""+month);
 		params.put("orderby", ""+orderby);*/
-		String url = String.format(LOVE_SEARCH_URL, year, month, orderby);
+		String url = String.format(LOVE_SEARCH_URL, ""+year, ""+month, ""+orderby);
 		
 		client.get(context, url, null ,new TextHttpResponseHandler() {
 			
@@ -587,9 +585,10 @@ import com.loopj.android.http.TextHttpResponseHandler;
 	}
 	
 		public static final String LOVE_ADD_URL = SERVER + "/loves/add";
-		public void addLove(Context context, int iscondom, final OnResultListener<LoveSearchResult> listener) {
+		public void addLove(Context context, int iscondom, String loves_date, final OnResultListener<LoveSearchResult> listener) {
 			RequestParams params = new RequestParams();
-			params.put("is_condom", ""+iscondom);
+			params.put("loves_condom", ""+iscondom);
+			params.put("loves_date", loves_date);
 			
 			client.post(context, LOVE_ADD_URL, params, new TextHttpResponseHandler() {
 				
@@ -614,9 +613,9 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		public static final String LOVE_EDIT_URL = SERVER + "/loves/%s/modify";	
 		public void modifyLove(Context context, int relation_no, int is_condom, String date, final OnResultListener<LoveSearchResult> listener) {
 			RequestParams params = new RequestParams();
-			params.put("relation_no", ""+relation_no);
-			params.put("is_condom", ""+is_condom);
-			params.put("date", date);
+			//params.put("loves_no", ""+relation_no);
+			params.put("loves_condom", ""+is_condom);
+			params.put("loves_date", date);
 			String url = String.format(LOVE_EDIT_URL, relation_no);
 			
 			client.post(context, url, params, new TextHttpResponseHandler() {
@@ -641,11 +640,11 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		
 		public static final String LOVE_DELETE_URL = SERVER + "/loves/%s/delete";
 		public void deleteLove(Context context, int relation_no, final OnResultListener<LoveSearchResult> listener) {
-			RequestParams params = new RequestParams();
-			params.put("relation_no", ""+relation_no);
+			//RequestParams params = new RequestParams();
+			//params.put("loves_no", ""+relation_no);
 			String url = String.format(LOVE_DELETE_URL, relation_no);
 			
-			client.post(context, url, params, new TextHttpResponseHandler() {
+			client.post(context, url, null, new TextHttpResponseHandler() {
 				
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,
