@@ -118,7 +118,7 @@
         android:background="#fffde5" >
 
         <Button
-            android:id="@+id/btn_delete"
+            android:id="@+id/btn_love_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -130,7 +130,7 @@
             android:textColor="#6a3906" />
 
         <Button
-            android:id="@+id/btn_ok"
+            android:id="@+id/btn_love_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="false"

@@ -16,7 +16,7 @@
         android:layout_toLeftOf="@id/textSymtom16"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="aaaa"
+        android:text="성욕"
         android:textSize="11sp" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_toRightOf="@+id/textSymtom2"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="asdas"
+        android:text="예민"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="11sp" />
 
@@ -58,7 +58,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
-        android:text="asd"
+        android:text="생리  증후군"
         android:textStyle="bold"
         android:textColor="@color/join_font_color"
         android:textSize="20sp" />
@@ -71,7 +71,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="asd"
+        android:text="분노"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="11sp" />
 
@@ -85,7 +85,7 @@
         android:layout_toLeftOf="@+id/textSymtom2"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="asdsad"
+        android:text="식욕"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="11sp" />
 
@@ -97,7 +97,7 @@
         android:layout_toRightOf="@+id/textSymtom6"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="asdasd"
+        android:text="설사"
         android:textSize="11sp" />
 
     <TextView
@@ -109,7 +109,7 @@
         android:layout_toLeftOf="@+id/textSymtom5"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="asd"
+        android:text="변비"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="11sp" />
 
@@ -122,7 +122,7 @@
         android:layout_marginRight="5dp"
         android:background="@drawable/symtom_selector2"
         android:gravity="center"
-        android:text="asdasd"
+        android:text="우울"
         android:textSize="11sp" />
 
     <TextView
@@ -135,7 +135,7 @@
         android:layout_marginTop="2dp"
         android:background="@drawable/symtom_selector2"
         android:gravity="center"
-        android:text="aaasd"
+        android:text="짜증"
         android:textSize="11sp" />
 
     <TextView
@@ -146,7 +146,7 @@
         android:layout_toRightOf="@id/textSymtom9"
         android:background="@drawable/symtom_selector2"
         android:gravity="center"
-        android:text="asddwqeqwe"
+        android:text="유방통증"
         android:textSize="9sp" />
 
     <TextView
@@ -158,7 +158,7 @@
         android:layout_toLeftOf="@+id/textSymtom9"
         android:background="@drawable/symtom_selector2"
         android:gravity="center"
-        android:text="zdfdf"
+        android:text="여드름"
         android:textSize="11sp" />
 
     <TextView
@@ -170,7 +170,7 @@
         android:layout_toLeftOf="@id/textSymtom6"
         android:background="@drawable/symtom_selector2"
         android:gravity="center"
-        android:text="qwewqe"
+        android:text="복통"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="11sp" />
 
@@ -183,7 +183,7 @@
         android:layout_toLeftOf="@+id/textSymtom13"
         android:background="@drawable/symtom_selector2"
         android:gravity="center"
-        android:text="wqeas"
+        android:text="무기력"
         android:textSize="11sp" />
 
     <TextView
@@ -196,7 +196,7 @@
         android:layout_toLeftOf="@id/textSymtom12"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="qweasd"
+        android:text="빈혈"
         android:textSize="11sp" />
 
     <TextView
@@ -207,7 +207,7 @@
         android:layout_toRightOf="@id/textSymtom13"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="qweas"
+        android:text="두통"
         android:textSize="11sp" />
 
     <TextView
@@ -219,7 +219,7 @@
         android:layout_marginRight="5dp"
         android:background="@drawable/symtom_selector2"
         android:gravity="center"
-        android:text="zxda"
+        android:text="불면증"
         android:textSize="11sp" />
 
     <TextView
@@ -234,7 +234,7 @@
         android:layout_marginTop="2dp"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="wqea"
+        android:text="식욕저하"
         android:textSize="9sp" />
 
     <TextView
@@ -245,7 +245,7 @@
         android:layout_toRightOf="@id/textSymtom16"
         android:background="@drawable/symtom_selector1"
         android:gravity="center"
-        android:text="qwe"
+        android:text="소화불량"
         android:textSize="9sp" />
 
     <FrameLayout

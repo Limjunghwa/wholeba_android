@@ -535,7 +535,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		
 		/*-----------LOVE---------*/
 		public static final String LOVE_SEARCH_URL = SERVER + "/loves/%s/%s/%s";
-		public void getLoveList(Context context, int orderby, int year, int month, final OnResultListener<LoveList> listener) {
+		public void getLoveList(Context context, int orderby, int year, int month, final OnResultListener<LoveSearchResult> listener) {
 		/*RequestParams params = new RequestParams();
 		params.put("year", ""+year);
 		params.put("month", ""+month);
@@ -548,9 +548,8 @@ import com.loopj.android.http.TextHttpResponseHandler;
 			public void onSuccess(int statusCode, Header[] headers,
 					String responseString) { 
 				Gson gson = new Gson();
-				LoveSearchResult results = gson.fromJson(responseString, LoveSearchResult.class);
-				LoveList list = results.result;
-				listener.onSuccess(list);  
+				LoveSearchResult results = gson.fromJson(responseString, LoveSearchResult.class); 
+				listener.onSuccess(results);  
 			}
 			
 			@Override
