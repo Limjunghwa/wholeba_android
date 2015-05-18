@@ -618,7 +618,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		public void deleteLove(Context context, int relation_no, final OnResultListener<LoveSearchResult> listener) {
 			//RequestParams params = new RequestParams();
 			//params.put("loves_no", ""+relation_no);
-			String url = String.format(LOVE_DELETE_URL, relation_no);
+			String url = String.format(LOVE_DELETE_URL, ""+relation_no);
 			
 			client.post(context, url, null, new TextHttpResponseHandler() {
 				

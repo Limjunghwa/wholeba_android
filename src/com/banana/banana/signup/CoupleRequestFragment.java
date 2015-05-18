@@ -1,9 +1,13 @@
 package com.banana.banana.signup;
  
 
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,15 +32,12 @@ public class CoupleRequestFragment extends Fragment {
 			Bundle savedInstanceState) { 
 		View view = inflater.inflate(R.layout.fragment_one, container, false);
 		btnRequest = (Button)view.findViewById(R.id.btn_couple_request);
-		edit_request_number = (EditText)view.findViewById(R.id.edit_number);
-		//Intent i = getActivity().getIntent();
-		//Bundle bundle = i.getExtras();  
-		//if (bundle == null) {
-		//	bundle = new Bundle();
-		//} 
+		edit_request_number = (EditText)view.findViewById(R.id.edit_number); 
+		edit_request_number.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+		edit_request_number.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+		
 		user_gender = PropertyManager.getInstance().getUserGender();  
 		
-
 		Bundle bundle = getActivity().getIntent().getExtras();
 		if (bundle == null) {
 			bundle = new Bundle();
@@ -52,19 +53,20 @@ public class CoupleRequestFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String number = edit_request_number.getText().toString(); 
-				if(number.length()>=10) {
-					String num1 = number.substring(0, 3);
-					String num2 = number.substring(3, 7);
-					String num3 = number.substring(7, 11);
-					auth_phone = num1+"-"+num2+"-"+num3;
-				
-				NetworkManager.getInstnace().coupleAsk(getActivity(), auth_phone, user_gender, new OnResultListener<JoinResult>() {
+				auth_phone = edit_request_number.getText().toString(); 
+				if(auth_phone.length()!=13) {
+					//String num1 = number.substring(0, 3);
+					//String num2 = number.substring(3, 7);
+					//String num3 = number.substring(7, 11); 
+					//auth_phone = num1+"-"+num2+"-"+num3; 
+					Toast.makeText(getActivity(), "번호를 다시 입력", Toast.LENGTH_SHORT).show();
+				} else {
+					NetworkManager.getInstnace().coupleAsk(getActivity(), auth_phone, user_gender, new OnResultListener<JoinResult>() {
 					
 					@Override
 					public void onSuccess(JoinResult result) {   
 						//버튼 비활성화
-
+						sendSMS(auth_phone, "커플요청"); 
 						btnRequest.setEnabled(false);
 					}
 					
@@ -73,14 +75,18 @@ public class CoupleRequestFragment extends Fragment {
 						
 					}
 				});  
-			} else {
-				Toast.makeText(getActivity(), "번호를 다시 입력", Toast.LENGTH_SHORT).show();
-			}
+			}  
 			}  
 		});
 	 	 
 		return view;
 	}
 	
-	
+
+	 private void sendSMS(String phoneNumber, String message)
+	    {        
+	        SmsManager sms = SmsManager.getDefault();
+	        sms.sendTextMessage(phoneNumber, null, message, null, null);        
+	    }    
+
 }
