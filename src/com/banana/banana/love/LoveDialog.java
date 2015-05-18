@@ -46,8 +46,8 @@ public class LoveDialog extends DialogFragment {
 		Bundle b = getArguments();
 		code = b.getString("code");
 		
-		btnOk = (Button)view.findViewById(R.id.btn_ok);
-		btnDelete = (Button)view.findViewById(R.id.btn_delete); 
+		btnOk = (Button)view.findViewById(R.id.btn_love_ok);
+		btnDelete = (Button)view.findViewById(R.id.btn_love_delete); 
 		LoveDayView = (EditText)view.findViewById(R.id.edit_love_day);
 		LoveMonthView = (EditText)view.findViewById(R.id.edit_love_month);
 		LoveYearView = (EditText)view.findViewById(R.id.edit_love_year);
@@ -132,14 +132,14 @@ public class LoveDialog extends DialogFragment {
 	}
 
 	private void initLoveDialogData(int orderby, int year, int month) {
-		NetworkManager.getInstnace().getLoveList(getActivity(), orderby, year, month, new OnResultListener<LoveList>() {
-			
+		NetworkManager.getInstnace().getLoveList(getActivity(), orderby, year, month, new OnResultListener<LoveSearchResult>() {
+
 			@Override
-			public void onSuccess(LoveList result) {
+			public void onSuccess(LoveSearchResult result) {
 				// TODO Auto-generated method stub
 				Bundle b = getArguments(); 
 				int position = b.getInt("position");
-				loveday = result.items.item.get(position-1).loves_date;  
+				loveday = result.result.items.item.get(position-1).loves_date;  
 				StringTokenizer tokens = new StringTokenizer(loveday);
 				String loveYear = tokens.nextToken("-");
 				String loveMonth = tokens.nextToken("-");
@@ -147,24 +147,23 @@ public class LoveDialog extends DialogFragment {
 				LoveYearView.setText(loveYear);
 				LoveMonthView.setText(loveMonth);
 				LoveDayView.setText(loveDate);
-				relation_no = result.items.item.get(position-1).loves_no;
-				iscondom = result.items.item.get(position-1).loves_condom;
+				relation_no = result.result.items.item.get(position-1).loves_no;
+				iscondom = result.result.items.item.get(position-1).loves_condom;
 				if(iscondom == 1) {
 					condomView.setChecked(true);
 				} else {
 					notCondomView.setChecked(true);
-				}
-
+				} 
 			}
+
 			@Override
 			public void onFail(int code) {
 				// TODO Auto-generated method stub
 				
 			}
 		});
+	};
 		
-	}
- 
 	protected void addLove(int iscondom) {
 		// TODO Auto-generated method stub
 		 

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.banana.banana.R;
+import com.banana.banana.login.LoginActivity;
 import com.banana.banana.love.NetworkManager.OnResultListener;
 import com.banana.banana.setting.SettingActivity;
 
@@ -237,24 +238,23 @@ public class LoveActivity extends ActionBarActivity {
 	
 	
 	private void initData() {  	 
-		NetworkManager.getInstnace().getLoveList(LoveActivity.this, orderby, year, month, new OnResultListener<LoveList>() {
+		NetworkManager.getInstnace().getLoveList(LoveActivity.this, orderby, year, month, new OnResultListener<LoveSearchResult>() {
 
 			@Override
-			public void onSuccess(LoveList result) {
-				// TODO Auto-generated method stub 
-				mLAdapter.clear();
-				mLAdapter.addAll(result.items.item);
-				isCondom = result.items.today_condom;
-				notCondom = result.items.today_notcondom; 
-				isCondomView.setText(""+isCondom);
-				noCondomView.setText(""+notCondom);     
-				if(couple_condom == 0) {
-					mHoloCircularProgressBar.setProgress((float)result.items.today_notcondom/100); 
-				} else {
-					mHoloCircularProgressBar.setProgress((float)result.items.today_condom/100); 
-				}
-			}
-
+			public void onSuccess(LoveSearchResult result) {  
+						// TODO Auto-generated method stub 
+						mLAdapter.clear();
+						mLAdapter.addAll(result.result.items.item);
+						isCondom = result.result.items.today_condom;
+						notCondom = result.result.items.today_notcondom; 
+						isCondomView.setText(""+isCondom);
+						noCondomView.setText(""+notCondom);     
+						if(couple_condom == 0) {
+							mHoloCircularProgressBar.setProgress((float)result.result.items.today_notcondom/100); 
+						} else {
+							mHoloCircularProgressBar.setProgress((float)result.result.items.today_condom/100); 
+						}
+					} 
 			@Override
 			public void onFail(int code) {
 				// TODO Auto-generated method stub
