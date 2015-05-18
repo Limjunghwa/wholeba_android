@@ -134,11 +134,9 @@ public class LoveActivity extends ActionBarActivity {
 					int position, long id) {
 				if(position == 1) {
 					orderby = position;
-					Toast.makeText(LoveActivity.this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 					initData();
 				} else if(position == 0) {
 					orderby = position;
-					Toast.makeText(LoveActivity.this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 					initData();
 				}
 			}
@@ -168,11 +166,13 @@ public class LoveActivity extends ActionBarActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Bundle b = new Bundle();
-				b.putInt("year", year);
-				b.putInt("month", month);
-				b.putInt("orderby", orderby);
 				b.putString("code", "0");
-				b.putInt("position", position);  
+				String loveDate = mLAdapter.loves.get(position-1).loves_date;
+				int lovesCondom = mLAdapter.loves.get(position-1).loves_condom;
+				int lovesNo = mLAdapter.loves.get(position-1).loves_no;
+				b.putString("loveDate", loveDate);
+				b.putInt("lovesCondom", lovesCondom);
+				b.putInt("lovesNo", lovesNo);    
 				dialog = new LoveDialog();
 				dialog.setArguments(b);
 				dialog.show(getSupportFragmentManager(), "dialog");  
@@ -244,7 +244,7 @@ public class LoveActivity extends ActionBarActivity {
 			public void onSuccess(LoveSearchResult result) {  
 						// TODO Auto-generated method stub 
 						mLAdapter.clear();
-						mLAdapter.addAll(result.result.items.item);
+						mLAdapter.addAll(result.result.items.item); 
 						isCondom = result.result.items.today_condom;
 						notCondom = result.result.items.today_notcondom; 
 						isCondomView.setText(""+isCondom);

@@ -24,7 +24,7 @@ public class LoveDialog extends DialogFragment {
 	
 	EditText LoveDayView, LoveYearView, LoveMonthView;
 	Button btnOk, btnDelete; 
-	int orderby, year, month, iscondom, relation_no;
+	int iscondom, relation_no;
 	String code;
 	String loveday, loves_date;
 	RadioGroup isCondomView; 
@@ -75,10 +75,7 @@ public class LoveDialog extends DialogFragment {
 			if(code.equals("1")) { 
 				LoveDayView.setText("");
 			} else { 
-				orderby = b.getInt("orderby");
-				year = b.getInt("year");
-				month = b.getInt("month");
-				initLoveDialogData(orderby, year, month);
+				initLoveDialogData();
 			} 
 		
 		btnOk.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +84,10 @@ public class LoveDialog extends DialogFragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub 
 				if(!code.equals("1")) {  
+					String year = LoveYearView.getText().toString();
+					String month = LoveMonthView.getText().toString();
+					String day = LoveDayView.getText().toString();
+					loveday = year+"-"+month+"-"+day;
 					 modifyLove(relation_no, iscondom, loveday);
 				} else if(code.equals("1")){
 					addLove(iscondom);
@@ -131,38 +132,26 @@ public class LoveDialog extends DialogFragment {
 		});
 	}
 
-	private void initLoveDialogData(int orderby, int year, int month) {
-		NetworkManager.getInstnace().getLoveList(getActivity(), orderby, year, month, new OnResultListener<LoveSearchResult>() {
-
-			@Override
-			public void onSuccess(LoveSearchResult result) {
-				// TODO Auto-generated method stub
-				Bundle b = getArguments(); 
-				int position = b.getInt("position");
-				loveday = result.result.items.item.get(position-1).loves_date;  
-				StringTokenizer tokens = new StringTokenizer(loveday);
+	private void initLoveDialogData() { 
+				Bundle b = getArguments();  
+				String loveDate = b.getString("loveDate");
+				iscondom = b.getInt("lovesCondom"); 
+				relation_no = b.getInt("lovesNo");  
+				
+				StringTokenizer tokens = new StringTokenizer(loveDate);
 				String loveYear = tokens.nextToken("-");
 				String loveMonth = tokens.nextToken("-");
-				String loveDate = tokens.nextToken("-");
+				String loveDay = tokens.nextToken("-");
 				LoveYearView.setText(loveYear);
 				LoveMonthView.setText(loveMonth);
-				LoveDayView.setText(loveDate);
-				relation_no = result.result.items.item.get(position-1).loves_no;
-				iscondom = result.result.items.item.get(position-1).loves_condom;
+				LoveDayView.setText(loveDay); 
 				if(iscondom == 1) {
 					condomView.setChecked(true);
 				} else {
 					notCondomView.setChecked(true);
 				} 
 			}
-
-			@Override
-			public void onFail(int code) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-	};
+ 
 		
 	protected void addLove(int iscondom) {
 		// TODO Auto-generated method stub

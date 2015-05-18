@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.banana.banana.PropertyManager;
 import com.banana.banana.R;
 import com.banana.banana.love.NetworkManager;
 import com.banana.banana.love.NetworkManager.OnResultListener;
@@ -22,6 +23,7 @@ public class MyinfoActivity extends ActionBarActivity {
 	View EditPeriodView;
 	ListView menseListView; 
 	WomanInfoAdapter mAdapter;
+	String user_gender;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MyinfoActivity extends ActionBarActivity {
 		//mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
 		mAdapter = new WomanInfoAdapter(this);
 		menseListView.setAdapter(mAdapter);
+		user_gender = PropertyManager.getInstance().getUserGender();
 		textperiodView = (TextView)findViewById(R.id.text_period_input);
 		textperiodView.setOnClickListener(new View.OnClickListener() {
 			
@@ -48,16 +51,18 @@ public class MyinfoActivity extends ActionBarActivity {
 	
 	private void initData() {
 		// TODO Auto-generated method stub
-		NetworkManager.getInstnace().getWomanInfoList(MyinfoActivity.this, new OnResultListener<WomanInfoResponse>() {
+		NetworkManager.getInstnace().getWomanInfoList(MyinfoActivity.this, user_gender, new OnResultListener<WomanInfoResponse>() {
 
 			@Override
 			public void onSuccess(WomanInfoResponse result) {
+				// TODO Auto-generated method stub
 				mAdapter.addAll(result.result.items.period);
 			}
 
 			@Override
 			public void onFail(int code) {
-				 
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		 

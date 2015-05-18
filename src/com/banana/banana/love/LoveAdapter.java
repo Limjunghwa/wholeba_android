@@ -52,15 +52,7 @@ public class LoveAdapter  extends BaseAdapter implements LoveItemView.OnMainView
 		LoveItemView lv=new LoveItemView(mcontext);
 		lv.setData(loves.get(position));
 		return lv;
-		/*LoveItemView view;
-		if(convertView == null) {
-			view = new LoveItemView(parent.getContext());
-			view.setOnMainViewClickListener(this);
-		} else {
-			view = (LoveItemView)convertView;
-		}
-		view.setData(loves.get(position));	
-		return view;*/
+		 
 	}
 
 

@@ -209,6 +209,7 @@ public class BananaMainActivity extends ActionBarActivity {
 						f_reward = result.items.f_reward;
 						TextMlevel.setText(""+m_reward);
 						TextFlevel.setText(""+f_reward); 
+						couple_condom = result.items.couple_condom;
 						if(f_condition == 1) {
 							//WomanChar.setImageResource(R.drawable.profile3);
 						}

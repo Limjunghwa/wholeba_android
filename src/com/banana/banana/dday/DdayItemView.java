@@ -36,12 +36,12 @@ public class DdayItemView extends FrameLayout{
 	public void setData(Ddayitem data) {  
 			subDdate(data.dday_date);
 			ddayNameView.setText(data.dday_name);
-			ddayDateView.setText(data.dday_date);
-			/*StringTokenizer st = new StringTokenizer(data.dday_date, "-");
+			//ddayDateView.setText(data.dday_date);
+			StringTokenizer st = new StringTokenizer(data.dday_date, "-");
 			String year = st.nextToken();
 			String month = st.nextToken();
 			String date = st.nextToken();
-			getDayOfWeek(year, month, date);*/
+			getDayOfWeek(year, month, date);
 	}
 	
 	protected void getDayOfWeek(String year, String month, String date) {
@@ -100,7 +100,7 @@ public class DdayItemView extends FrameLayout{
 		
 		int days = (int)((d1-d2)/(1000*60*60*24)); 
 		if(days<0) {
-			ddayNumView.setText("D-"+days);
+			ddayNumView.setText("D"+days);
 		} else if(days>0) {
 			ddayNumView.setText("D+"+Math.abs(days));
 		} else if(days==0) {

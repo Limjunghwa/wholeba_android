@@ -51,6 +51,7 @@ public class LovePopupOk extends ActionBarActivity implements SensorEventListene
 		
 		Intent i = getIntent();
 		is_condom = i.getIntExtra("is_condom", -1);
+		Toast.makeText(LovePopupOk.this, ""+is_condom, Toast.LENGTH_SHORT).show();
 		
 	}
 

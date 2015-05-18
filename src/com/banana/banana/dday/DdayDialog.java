@@ -147,32 +147,21 @@ public class DdayDialog extends DialogFragment {
 			}
 		});
 	}
+	
 	private void initDialogData() { 
-	NetworkManager.getInstnace().getDdayList(getActivity(), new OnResultListener<DdayResult>() {
-
-		@Override
-		public void onSuccess(DdayResult result) {
-			// TODO Auto-generated method stub
-			Bundle b = getArguments(); 
-			int position = b.getInt("position");
-			String dday = result.items.get(position).dday_name;
-			String ddayDate = result.items.get(position).dday_date;
+	  
+			Bundle b = getArguments();  
+			String ddayDate = b.getString("ddayDate");
+			String ddayName = b.getString("ddayName");
 			StringTokenizer tokens = new StringTokenizer(ddayDate, "-");
 			String ddayYear = tokens.nextToken();
 			String ddayMonth = tokens.nextToken();
 			String ddayDay = tokens.nextToken(); 
-			ddayNameView.setText(dday);
+			ddayNameView.setText(ddayName);
 			ddayYearView.setText(ddayYear);
 			ddayMonthView.setText(ddayMonth);
 			ddayDayView.setText(ddayDay);
-			id = result.items.get(position).dday_no;
-		}
-
-		@Override
-		public void onFail(int code) { 
-		}
-	});
-	
-}}
-	
+			id = b.getInt("ddayNo");
+	}} 
+	 
 	 

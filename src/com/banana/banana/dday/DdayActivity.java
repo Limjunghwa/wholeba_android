@@ -90,8 +90,13 @@ public class DdayActivity extends ActionBarActivity {
 					int position, long id) {
 				// TODO Auto-generated method stub  
 				Bundle b = new Bundle();
-				b.putInt("code", 0);
-				b.putInt("position", position);   
+				String ddayDate = mDAdapter.ddaylist.get(position).dday_date;
+				String ddayName = mDAdapter.ddaylist.get(position).dday_name;
+				int ddayNo = mDAdapter.ddaylist.get(position).dday_no;
+				b.putString("ddayDate", ddayDate);
+				b.putString("ddayName", ddayName);
+				b.putInt("ddayNo", ddayNo);
+				b.putInt("code", 0); 
 				DdayDialog dialog = new DdayDialog();
 				dialog.setArguments(b);
 				dialog.show(getSupportFragmentManager(), "dialog");  
