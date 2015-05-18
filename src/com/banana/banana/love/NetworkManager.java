@@ -27,6 +27,7 @@ import com.banana.banana.main.CoupleInfoResult;
 import com.banana.banana.main.UserInfoResponse;
 import com.banana.banana.main.UserInfoResult;
 import com.banana.banana.mission.BananaItemResponse;
+import com.banana.banana.mission.MissionIngResult;
 import com.banana.banana.mission.MissionResult;
 import com.banana.banana.setting.NoticeResponse;
 import com.banana.banana.setting.WomanInfoResponse;
@@ -668,8 +669,8 @@ import com.loopj.android.http.TextHttpResponseHandler;
 		
 		/*-----------미션---------*/
 		public static final String MISSION_ING_LIST=SERVER+"/missions";
-		public void getMissionIngList(Context context,  final OnResultListener<MissionResult> listener){
-			String url = String.format(MISSION_LIST_URL);
+		public void getMissionIngList(Context context,  final OnResultListener<MissionIngResult> listener){
+			String url = String.format(MISSION_ING_LIST);
 			client.get(context, url, new TextHttpResponseHandler() {
 				
 				@Override
@@ -677,7 +678,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 						String responseString) {
 					// TODO Auto-generated method stub
 					Gson gson = new Gson();
-					MissionResult results = gson.fromJson(responseString, MissionResult.class);
+					MissionIngResult results = gson.fromJson(responseString, MissionIngResult.class);
 					listener.onSuccess(results);
 				}
 				

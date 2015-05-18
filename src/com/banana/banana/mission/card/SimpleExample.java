@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,23 +32,27 @@ import at.technikum.mti.fancycoverflow.FancyCoverFlow;
 import com.banana.banana.R;
 import com.banana.banana.love.NetworkManager;
 import com.banana.banana.love.NetworkManager.OnResultListener;
+import com.banana.banana.mission.IngItemData;
+import com.banana.banana.mission.MissionIngResult;
 import com.banana.banana.mission.MissionItemData;
 import com.banana.banana.mission.MissionResult;
+import com.banana.banana.mission.MissionSendPushActivity;
 import com.banana.banana.mission.scratch.MissionCardScratchActivity;
 
 public class SimpleExample extends Activity {
 	HorizontalScrollView hView;
 	Button btn_ok;
 	private int item_cnt;
-	private String theme_no;//미션 테마 
+	private int theme_no;//미션 테마 
+	private int mlist_no;
 	private String mlist_name;//미션명
-	private TextView MissionNameView;
+	
     // =============================================================================
     // Child views
     // =============================================================================
 
-    private FancyCoverFlow fancyCoverFlow;
-    private FancyCoverFlowSampleAdapter fAdapter;
+	FancyCoverFlow fancyCoverFlow;
+    FancyCoverFlowSampleAdapter fAdapter;
     // =============================================================================
     // Supertype overrides
     // =============================================================================
@@ -65,15 +70,15 @@ public class SimpleExample extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-			Intent intent=new Intent(SimpleExample.this,MissionCardScratchActivity.class);
+			Intent intent=new Intent(SimpleExample.this,MissionSendPushActivity.class);
+			intent.putExtra("mlist_no",mlist_no);
 			startActivity(intent);
 			}
 		});
         this.fancyCoverFlow = (FancyCoverFlow) this.findViewById(R.id.fancyCoverFlow);
         fAdapter=new FancyCoverFlowSampleAdapter();
         this.fancyCoverFlow.setAdapter(fAdapter);
-        fAdapter.add(R.drawable.card1);
-        fAdapter.add(R.drawable.card2);
+       
         this.fancyCoverFlow.setUnselectedAlpha(100.0f);
         this.fancyCoverFlow.setUnselectedSaturation(0.0f);
         this.fancyCoverFlow.setUnselectedScale(0.5f);
@@ -81,14 +86,15 @@ public class SimpleExample extends Activity {
         this.fancyCoverFlow.setMaxRotation(0);
         this.fancyCoverFlow.setScaleDownGravity(0.2f);
         this.fancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
+       this.fancyCoverFlow.setSelection(0);
         
-        //this.fancyCoverFlow.setSelection(3);
         this.fancyCoverFlow.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 			
+				
 				
 			}
 
@@ -99,33 +105,39 @@ public class SimpleExample extends Activity {
 			}
 		});
         
-        NetworkManager.getInstnace().getMissionIngList(SimpleExample.this,new OnResultListener<MissionResult>() {
+       NetworkManager.getInstnace().getMissionIngList(SimpleExample.this,new OnResultListener<MissionIngResult>() {
 			
 			@Override
-			public void onSuccess(MissionResult result) {
+			public void onSuccess(MissionIngResult result) {
 				
 				if(result.success==1){
+					fAdapter.clear();
 					item_cnt=result.result.item_cnt;//카드 총 갯수 
+					
+					//fAdapter.clear();
 					for(int i=0;i<item_cnt;i++){
-						MissionItemData md;
-						md=result.result.items.item.get(i);
+						IngItemData md;
+						md=result.result.items.get(i);
 						
 						theme_no=md.theme_no;
-						mlist_name=md.mlist_name;
-						fAdapter.clear();
-						if(theme_no.equals("1")){//악마
+						mlist_no=md.mlist_no;
+						//mlist_name=md.mlist_name;
+						//fAdapter.add(R.drawable.card1);
+						if(theme_no==1){//악마
 							fAdapter.add(R.drawable.card1);
+						
 							
-						}else if(theme_no.equals("2")){//처음
+							
+						}else if(theme_no==2){//처음
 							fAdapter.add(R.drawable.card2);
 							
-						}else if(theme_no.equals("3")){//섹시
+						}else if(theme_no==3){//섹시
 							fAdapter.add(R.drawable.card3);
 							
-						}else if(theme_no.equals("4")){//애교
+						}else if(theme_no==4){//애교
 							fAdapter.add(R.drawable.card4);
 							
-						}else if(theme_no.equals("5")){//천사
+						}else if(theme_no==5){//천사
 							fAdapter.add(R.drawable.card5);
 							
 						}

@@ -2,6 +2,7 @@ package com.banana.banana.mission;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +45,8 @@ public class MissionActivity extends ActionBarActivity {
 		mSpinner.setAdapter(mArrayAdapter);
 		//임시로
 		year=2015;
-		month=03;
+		month=5;
+		orderby=0;
 		//-----------------------------
 		
 		//toal score--------------------------------------------------------
@@ -122,8 +124,10 @@ public class MissionActivity extends ActionBarActivity {
 				mAdapter.addAll(result.result.items.item);
 				manTotalScore=result.result.items.m_total;
 				manTotalScoreView.setText(""+manTotalScore);
+				Log.i("manTotal", ""+manTotalScore);
 				womanTotalScore=result.result.items.f_total;
 				womanTotalScoreView.setText(""+womanTotalScore);
+				Log.i("womanTotal", ""+womanTotalScore);
 				manCompleteScore=result.result.items.m_copleted;
 				manCompleteView.setText(""+womanCompleteScore);
 				womanCompleteScore=result.result.items.f_completed;
@@ -138,21 +142,7 @@ public class MissionActivity extends ActionBarActivity {
 				
 			}
 		});
-		/*for(int i=0;i<7;i++)
-		{
-			MissionItemData d=new MissionItemData();
 		
-			
-			if(i%2==0)
-				d.iconId=R.drawable.mission_contents_man_ing_icon;
-			else
-				d.iconId=R.drawable.mission_contents_man_icon;
-				
-			d.Missiontitle="count"+i;
-			
-			
-			mAdapter.add(d);
-		}*/
 	}
 	
 	
